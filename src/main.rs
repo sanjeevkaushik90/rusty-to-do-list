@@ -1,4 +1,4 @@
-use std::io;
+use std::io::{self};
 
 fn main() {
     store_value();
@@ -36,7 +36,49 @@ fn store_value() {
             println!("Invalid Choice");
         }
     }
-    for (index,value) in store.iter().enumerate(){
-        println!("{} : {}", index+1,value)
+    println!("Current Task:");
+    for (index, value) in store.iter().enumerate() {
+        println!("{} : {}", index + 1, value)
+    }
+loop{
+    println!("Do you wish to do delete any task(y/n)");
+
+    let mut start = String::new();
+    io::stdin().read_line(&mut start).expect("msg");
+    let wish = start.as_str().trim();
+
+    if wish == "y" {
+        println!("Choose number of task (e.g. 1,2,3,4):");
+
+        let mut index = String::new();
+        io::stdin().read_line(&mut index).expect("msg");
+
+        let number: u32 = match index.trim().parse() {
+            Ok(number) => number,
+            Err(_) => {
+                println!("enter a vaild number");
+                return;
+            }
+        };
+
+
+        if number>=1 &&  number <= store.len().try_into().unwrap() {
+
+            let index = number as usize - 1;
+            store.remove(index);
+        }
+        else{
+            println!("Invalid task number")
+        }
+
+        println!("Current Task:");
+        for (index, value) in store.iter().enumerate() {
+            println!("{} : {}", index + 1, value)
+        }
+    }
+    else if wish=="n" {
+        break;
     }
 }
+}
+
