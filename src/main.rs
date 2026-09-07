@@ -1,25 +1,40 @@
-use std::io::{self};
+use std::{io::{self}};
 
 fn main() {
     store_value();
+
+    let task=Task{
+        title:String::from("Write a report"),
+        completed:false,
+
+    };
+    println!("{}",task.title);
 }
 
-fn user_input() -> Result<String, String> {
+struct Task {
+    title: String,
+    completed: bool,
+}
+
+fn user_input() -> Result<Task, String> {
     let mut input = String::new();
 
     io::stdin()
         .read_line(&mut input)
         .map_err(|_| "Failed to read input".to_string())?;
 
-    Ok(input.trim().to_string())
+    Ok(Task {
+    title: input.trim().to_string(),
+    completed: false,
+})
 }
 
 fn store_value() {
-    let mut store = Vec::new();
+    let mut store:Vec<Task> = Vec::new();
 
     loop {
         match user_input() {
-            Ok(value) => store.push(value),
+            Ok(task) => store.push(task),
             Err(e) => println!("{}", e),
         }
 
@@ -38,7 +53,7 @@ fn store_value() {
     }
     println!("Current Task:");
     for (index, value) in store.iter().enumerate() {
-        println!("{} : {}", index + 1, value)
+        println!("{} : {}", index + 1, value.title)
     }
 loop{
     println!("Do you wish to do delete any task(y/n)");
@@ -73,7 +88,7 @@ loop{
 
         println!("Current Task:");
         for (index, value) in store.iter().enumerate() {
-            println!("{} : {}", index + 1, value)
+            println!("{} : {}", index + 1, value.title)
         }
     }
     else if wish=="n" {
@@ -81,4 +96,3 @@ loop{
     }
 }
 }
-
