@@ -24,21 +24,11 @@ fn main() {
 
         match num {
             1 => store_value(&mut store),
-            2 => {
-                // println!("{} : {} ->  {}", index + 1, value.title, stauts);
-                for (index, value) in store.iter().enumerate() {
-                    let status;
-                    if value.completed {
-                        status = "Done"
-                    } else {
-                        status = "Pending"
-                    }
-                    println!("{} : {} --> {}", index + 1, value.title, status);
-                }
-            }
+            2 => list_task(&store),
             3 => delete_task(&mut store),
             4 => compelete_task(&mut store),
-            5 => { break;
+            5 => {
+                break;
             }
 
             _ => {
@@ -185,5 +175,19 @@ fn compelete_task(store: &mut Vec<Task>) {
             stauts = "Pending"
         }
         println!("{} : {} ->  {}", index + 1, value.title, stauts);
+    }
+}
+
+fn list_task(store: &Vec<Task>) {
+    {
+        for (index, value) in store.iter().enumerate() {
+            let status;
+            if value.completed {
+                status = "Done"
+            } else {
+                status = "Pending"
+            }
+            println!("{} : {} --> {}", index + 1, value.title, status);
+        }
     }
 }
